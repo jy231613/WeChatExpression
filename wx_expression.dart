@@ -269,7 +269,6 @@ class ExpressionText extends StatelessWidget {
         //添加一张图片
         if (ExpressionData.expressionKV.containsKey(buin)) {
           var expressionKV = ExpressionData.expressionKV[buin];
-          Logger.d(expressionKV);
           stack.add(Image.asset(
             'assets/expression/$expressionKV',
             width: 20.0,
