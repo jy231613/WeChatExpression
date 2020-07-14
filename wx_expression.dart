@@ -244,19 +244,83 @@ class ExpressionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Wrap(
+      child: Text.rich(TextSpan(
         children: _getContent(),
-      ),
+      )),
     );
   }
 
-  ///获取内部
+  ///使用正则解析表情文本,使用了Text.rich替换掉了Warp
   _getContent() {
+    if (ExpressionData.expressionKV.length == 0) {
+      ExpressionData.init();
+    }
+    List<InlineSpan> stack = [];
+
+    List<int> indexList = [];
+
+    //正则校验是否含有表情
+    RegExp exp = new RegExp(r'\[.{1,4}?\]');
+    if (exp.hasMatch(_text)) {
+      var array = exp.allMatches(_text).toList();
+      for (RegExpMatch r in array) {
+        var substring = _text.substring(r.start, r.end);
+        var select = substring.substring(1, substring.length - 1);
+        if (ExpressionData.expressionKV.containsKey(select)) {
+          indexList.add(r.start);
+          indexList.add(r.end);
+        }
+      }
+      int afterX = 0;
+      for (int x = 0; x < indexList.length; x = x + 2) {
+        int y = x + 1;
+        var indexX = indexList[x];
+        var indexY = indexList[y];
+        var substring = _text.substring(afterX, indexX);
+        afterX = indexY;
+        stack.add(TextSpan(
+          text: substring,
+          style: _textStyle,
+        ));
+        var xy = _text.substring(indexX, indexY);
+        var selectXy = xy.substring(1, xy.length - 1);
+        var expressionKV = ExpressionData.expressionKV[selectXy];
+        stack.add(WidgetSpan(
+          child: Image.asset(
+            'assets/expression/$expressionKV',
+            width: 20.0,
+            height: 20.0,
+          ),
+        ));
+      }
+    } else {
+      stack.add(TextSpan(
+        text: _text,
+        style: _textStyle,
+      ));
+    }
+
+    return stack;
+  }
+
+  ///获取内部
+  @Deprecated('已弃用,有些特殊字符会导致标错')
+  _getContent2() {
     if (ExpressionData.expressionKV.length == 0) {
       ExpressionData.init();
     }
 
     List<Widget> stack = [];
+
+    if (_text.length > 1024) {
+      //添加文本
+      stack.add(Text(
+        _text,
+        style: _textStyle,
+      ));
+      return stack;
+    }
+
     String buin = '';
     bool isExpression = false;
     for (int a = 0; a < _text.length; a++) {
