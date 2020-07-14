@@ -238,19 +238,30 @@ class ExpressionText extends StatelessWidget {
   final String _text;
   final TextStyle _textStyle;
 
-  const ExpressionText(this._text, this._textStyle, {Key key})
+  //最大行数,默认-1,不限制
+  final int maxLine;
+
+  const ExpressionText(this._text, this._textStyle,
+      {Key key, this.maxLine = -1})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text.rich(TextSpan(
-        children: _getContent(),
-      )),
+      child: (maxLine > 0)
+          ? Text.rich(
+              TextSpan(
+                children: _getContent(),
+              ),
+              maxLines: maxLine,
+            )
+          : Text.rich(TextSpan(
+              children: _getContent(),
+            )),
     );
   }
 
-  ///使用正则解析表情文本,使用了Text.rich替换掉了Warp
+  ///使用正则解析表情文本,使用了Text.rich替换掉了Wrap
   _getContent() {
     if (ExpressionData.expressionKV.length == 0) {
       ExpressionData.init();
