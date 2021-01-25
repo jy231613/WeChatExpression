@@ -304,6 +304,13 @@ class ExpressionText extends StatelessWidget {
           ),
         ));
       }
+      var substring = _text.substring(afterX);
+      if (substring.length > 0) {
+        stack.add(TextSpan(
+          text: substring,
+          style: _textStyle,
+        ));
+      }
     } else {
       stack.add(TextSpan(
         text: _text,
