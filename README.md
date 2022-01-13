@@ -20,8 +20,10 @@ Java使用方法:
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginTop="10dp"/>
-        
-        
+       
+       
+监听:
+       
 
     holder.emojiView.setEmojiListener(new OnClickEmojiListener() {
             @Override
