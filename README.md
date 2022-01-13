@@ -15,7 +15,7 @@ Java使用方法:
 
 
 
-<com.innerchic.weqiuqiu.emoji.EmojiView
+    <com.innerchic.weqiuqiu.emoji.EmojiView
         android:id="@+id/emojiView"
         android:layout_width="match_parent"
         android:layout_height="220dp"
@@ -23,7 +23,7 @@ Java使用方法:
         
         
 
-holder.emojiView.setEmojiListener(new OnClickEmojiListener() {
+    holder.emojiView.setEmojiListener(new OnClickEmojiListener() {
             @Override
             public void onClick(Expression expression, int pos) {
                 Editable text = holder.edtextContent.getText();
