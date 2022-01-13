@@ -10,3 +10,33 @@
 
 
 java使用时不要.dart文件,Flutter使用时不要emoji文件夹和oldbase的文件夹.
+
+Java使用方法:
+
+
+
+<com.innerchic.weqiuqiu.emoji.EmojiView
+        android:id="@+id/emojiView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="10dp"/>
+        
+        
+
+holder.emojiView.setEmojiListener(new OnClickEmojiListener() {
+            @Override
+            public void onClick(Expression expression, int pos) {
+                Editable text = holder.edtextContent.getText();
+                if (text == null || "".equals(text.toString())) {
+                    holder.edtextContent.append("[" + expression.getName() + "]");
+                    return;
+                }
+                int index = holder.edtextContent.getSelectionStart();
+                text.insert(index, "[" + expression.getName() + "]");
+            }
+
+            @Override
+            public void onLongClick(Expression expression, int pos) {
+                showToast(expression.getName());
+            }
+        });
