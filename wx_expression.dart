@@ -304,6 +304,14 @@ class ExpressionText extends StatelessWidget {
           ),
         ));
       }
+      if (afterX < (_text.length - 1)) {
+        //拼接剩下的字符串
+        var substring = _text.substring(afterX);
+        stack.add(TextSpan(
+          text: substring,
+          style: _textStyle,
+        ));
+      }
     } else {
       stack.add(TextSpan(
         text: _text,
