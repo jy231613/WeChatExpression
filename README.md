@@ -54,3 +54,6 @@ Java使用方法:
                 showToast(expression.getName());
             }
         });
+
+2022年11月17日：提交了Java版的两个layout布局文件，之前忘记提交了，在emoji文件夹中。
+
